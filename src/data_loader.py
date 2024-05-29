@@ -1,9 +1,13 @@
 from pandas import DataFrame, read_csv, to_datetime
 import boto3
+import os
 
 
 def load_electricity() -> DataFrame:
-    return DataFrame(read_csv('./data/electricity_costs.csv'))
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(current_dir, 'data', 'electricity_costs.csv')
+
+    return DataFrame(read_csv(file_path))
 
 
 def load_btc_prices() -> DataFrame:
@@ -31,5 +35,9 @@ def load_difficulties() -> DataFrame:
 electricity = load_electricity()
 btc_prices = load_btc_prices()
 difficulties = load_difficulties()
-breakpoint()
+
+# Join dataframes by Date
+merged_df = electricity.merge(btc_prices, on='Date')
+merged_df = merged_df.merge(difficulties, on='Date')
+
 print(0)
