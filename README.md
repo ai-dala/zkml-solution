@@ -1,1 +1,2 @@
-# zkml-solution
+# Gizathon ZKML - Aidala
+

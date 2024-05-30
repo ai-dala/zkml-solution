@@ -39,5 +39,3 @@ difficulties = load_difficulties()
 # Join dataframes by Date
 merged_df = electricity.merge(btc_prices, on="Date")
 merged_df = merged_df.merge(difficulties, on="Date")
-
-print(0)
