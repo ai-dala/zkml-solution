@@ -40,8 +40,8 @@ def get_uniswap_v3_pool_address(tokenA, tokenB, fee):
 
 
 # Example usage:
-tokenA = "0x5928A372De475721231B4411a26a01602E0a6dFa"  # DAI
-tokenB = "0xdCdC73413c6136c9abcc3e8d250af42947ac2fc7"  # USDC
+tokenA = "0xaA8E23Fb1079EA71e0a56F48a2aA51851D8433D0"  # DAI
+tokenB = "0x29f2D40B0605204364af54EC677bD022dA425d03"  # USDC
 fee = 3000  # Fee tier (e.g., 3000 for 0.3%)
 
 pool_address = get_uniswap_v3_pool_address(tokenA, tokenB, fee)
