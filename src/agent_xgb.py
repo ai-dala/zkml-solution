@@ -3,30 +3,33 @@ import numpy as np
 import pandas as pd
 import os
 from dotenv import load_dotenv
+from giza.agents.model import GizaModel
+from eth_abi import encode
+import web3
+import web3.eth
+from typing import Any
 
 load_dotenv()
 
 
+import logging
+
+logger = logging.getLogger()
+logger.setLevel("DEBUG")
+
+
 def predict(agent: GizaAgent, X: np.ndarray):
-    """
-    Predict the next day volatility.
-
-    Args:
-        X (np.ndarray): Input to the model.
-
-    Returns:
-        int: Predicted value.
-    """
-    prediction = agent.predict(input_feed={"val": X}, verifiable=True, job_size="XL")
+    prediction = (
+        agent.predict(
+            input_feed={"input": X}, verifiable=True, job_size="M", model_category="XGB"
+        ),
+    )
     return prediction
 
 
 def create_agent(
     model_id: int, version_id: int, chain: str, contracts: dict, account: str
 ):
-    """
-    Create a Giza agent for the volatility prediction model
-    """
     agent = GizaAgent(
         contracts=contracts,
         id=model_id,
@@ -45,26 +48,74 @@ def load_data():
     return data
 
 
+def execute_actions(contracts: Any, value: str):
+    w3 = web3.Web3(web3.Web3.HTTPProvider(os.environ["SEPOLIA_RPC_URL"]))
+
+
+    recipient = "0xAb616594bc7BA3b3B11711718E4D9eA962Ec6f82"
+    amount_in = int(float(value) * 10**8)
+
+    contracts.WBTC.approve("0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD", amount_in)
+    minimum_amount_out = 0
+
+    uniswap_path = encode(
+        ["address", "uint256", "address"],
+        [
+            "0x29f2D40B0605204364af54EC677bD022dA425d03",
+            3000,
+            "0x94a9D9AC8a22534E3FaCa9F4e7F2E2cf85d5E4C8",
+        ],
+    )
+    inputs = encode(
+        ["address", "uint256", "uint256", "bytes", "bool"],
+        [recipient, amount_in, minimum_amount_out, uniswap_path, False],
+    )
+
+    deadline = int(w3.eth.get_block('latest')["timestamp"]) + 1200
+
+    commands = b"\x00"
+    response = contracts.universal_router.execute(commands, [inputs], deadline)
+    breakpoint()
+    print(0)
+
 def main():
     contracts = {
-        "WBTC" : "0x29f2D40B0605204364af54EC677bD022dA425d03",
+        "WBTC": "0x29f2D40B0605204364af54EC677bD022dA425d03",
         "USDC": "0x94a9D9AC8a22534E3FaCa9F4e7F2E2cf85d5E4C8",
-        "pool": "0x3faC21f2d59d890BA23b82028aB2B3dA8ae5A116"
+        "universal_router": "0x3fC91A3afd70395Cd496C647d5a6CC9D4B2b7FAD",
     }
     model_id = 680
     version_id = 4
-    chain = "ethereum:sepolia:geth"
+    chain = f"ethereum:sepolia:{os.environ['SEPOLIA_RPC_URL']}"
 
-    data = load_data()
-    independent_values = data[["Electricity_day_price", 'Difficulty', 'HashRate', 'Power', 'Block Reward', 'Cost_2_months', 'Cost_3_months', 'Cost_4_months', 'Cost_5_months', 'Cost_6_months']].values
-    last_value = independent_values[-1]
-    model_input = last_value.reshape((10, 1))
-    breakpoint()
+    # data = load_data()
+    # independent_values = data[
+    #     [
+    #         "Electricity_day_price",
+    #         "Difficulty",
+    #         "HashRate",
+    #         "Power",
+    #         "Block Reward",
+    #         "Cost_2_months",
+    #         "Cost_3_months",
+    #         "Cost_4_months",
+    #         "Cost_5_months",
+    #         "Cost_6_months",
+    #     ]
+    # ].values
+
+    # last_value = independent_values[-1, :]
+    # last_value[1] /= 10**13
+    print("Creating agent")
     agent = create_agent(model_id, version_id, chain, contracts, "aidala_working")
-    prediction = predict(agent, model_input)
-
-    breakpoint()
-    print(0)
+    print("Running prediction")
+    # prediction = predict(agent, last_value)
+    # print(f"Prediction {prediction}")
+    # value = float(prediction[0].value)
+    value = 0.09
+    if value < 1:
+        with agent.execute() as contracts:
+            execute_actions(contracts, value)
 
 
 if __name__ == "__main__":

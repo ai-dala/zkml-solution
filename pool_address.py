@@ -15,6 +15,54 @@ factory_abi = [
     }
 ]
 
+pool_abi = [
+  {
+    "constant": True,
+    "inputs": [],
+    "name": "slot0",
+    "outputs": [
+      {
+        "internalType": "uint160",
+        "name": "sqrtPriceX96",
+        "type": "uint160"
+      },
+      {
+        "internalType": "int24",
+        "name": "tick",
+        "type": "int24"
+      },
+      {
+        "internalType": "uint16",
+        "name": "observationIndex",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint16",
+        "name": "observationCardinality",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint16",
+        "name": "observationCardinalityNext",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint8",
+        "name": "feeProtocol",
+        "type": "uint8"
+      },
+      {
+        "internalType": "bool",
+        "name": "unlocked",
+        "type": "bool"
+      }
+    ],
+    "payable": False,
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
+
 infura_url = "https://sepolia.infura.io/v3/8ef2abc2fcac40fdad51d7891ae4bee5"
 web3 = Web3(Web3.HTTPProvider(infura_url))
 
@@ -40,9 +88,13 @@ def get_uniswap_v3_pool_address(tokenA, tokenB, fee):
 
 
 # Example usage:
-tokenA = "0x29f2D40B0605204364af54EC677bD022dA425d03"  # DAI
+tokenA = "0x29f2D40B0605204364af54EC677bD022dA425d03"  # WBTC
 tokenB = "0x94a9D9AC8a22534E3FaCa9F4e7F2E2cf85d5E4C8"  # USDC
 fee = 3000  # Fee tier (e.g., 3000 for 0.3%)
 
 pool_address = get_uniswap_v3_pool_address(tokenA, tokenB, fee)
 print(f"The pool address is: {pool_address}")
+
+pool_contract = web3.eth.contract(address=pool_address, abi=pool_abi)
+slot0_data = pool_contract.functions.slot0().call()
+print(f"Slot0 data: {slot0_data}")
