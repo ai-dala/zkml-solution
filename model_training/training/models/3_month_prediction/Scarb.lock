@@ -2,5 +2,5 @@
 version = 1
 
 [[package]]
-name = "xgb_aidala"
+name = "xgb_aidala_2"
 version = "0.1.0"

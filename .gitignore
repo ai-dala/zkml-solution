@@ -2,3 +2,7 @@ merged_data.csv
 input_data.csv
 
 .env
+.python-version
+*.egg-info
+
+tmp
