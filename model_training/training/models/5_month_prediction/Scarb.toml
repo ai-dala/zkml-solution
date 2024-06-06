@@ -1,5 +1,5 @@
 [package]
-name = "xgb_aidala_4"
+name = "xgb_aidala_4_prod"
 version = "0.1.0"
 
 [cairo]

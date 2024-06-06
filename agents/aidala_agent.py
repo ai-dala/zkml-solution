@@ -78,6 +78,7 @@ def execute_actions(contracts: Any, value: float):
     help="daily price of electricity for today, assuming 100% utilisation - ie 24 hrs",
     type=float,
 )
+@click.option("--btc_price", required=True, type=float)
 @click.option("--difficulty", required=True, type=float)
 @click.option("--hash_rate", required=True, type=float)
 @click.option("--power", required=True, type=float)
@@ -89,6 +90,7 @@ def execute_actions(contracts: Any, value: float):
 @click.option("--cost_6_months", required=True, type=float)
 def run_agents(
     electricity_day_price,
+    btc_price,
     difficulty,
     hash_rate,
     power,
@@ -105,8 +107,8 @@ def run_agents(
         "swap_router": "0x3bFA4769FB09eefC5a80d6E87c3B9C650f7Ae48E",
         "pool": "0x3faC21f2d59d890BA23b82028aB2B3dA8ae5A116",
     }
-    model_ids = [712, 711, 710, 709]
-    version_id = 1
+    model_ids = [728, 727, 726, 725]
+    version_id = 2
     chain = f"ethereum:sepolia:{os.environ['SEPOLIA_RPC_URL']}"
 
     click.echo("Creating agents")
@@ -115,6 +117,7 @@ def run_agents(
     model_input = np.array(
         [
             electricity_day_price,
+            btc_price,
             difficulty,
             hash_rate,
             power,
