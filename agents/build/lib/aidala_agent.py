@@ -10,7 +10,7 @@ import click
 
 load_dotenv()
 
-
+RECIPIENT = os.environ["RECIPIENT"]
 import logging
 
 logger = logging.getLogger()
@@ -53,14 +53,15 @@ def execute_actions(contracts: Any, value: float):
     slot0 = contracts.pool.slot0()
     print(slot0)
 
-    recipient = "0xAb616594bc7BA3b3B11711718E4D9eA962Ec6f82"
+    recipient = RECIPIENT
     amount_in = int(value * 10**8)
 
-    contracts.WBTC.approve("0x3bFA4769FB09eefC5a80d6E87c3B9C650f7Ae48E", amount_in)
+    if contracts.WBTC.allowance(recipient, contracts.swap_router.address) < amount_in:
+        contracts.WBTC.approve(contracts.swap_router.address, amount_in)
 
     swap_params = {
-        "tokenIn": "0x29f2D40B0605204364af54EC677bD022dA425d03",
-        "tokenOut": "0x94a9D9AC8a22534E3FaCa9F4e7F2E2cf85d5E4C8",
+        "tokenIn": contracts.WBTC.address,
+        "tokenOut": contracts.USDC.address,
         "fee": 3000,
         "recipient": recipient,
         "deadline": int(time.time()) + 60,

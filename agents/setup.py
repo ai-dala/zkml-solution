@@ -17,6 +17,5 @@ setup(
         "console_scripts": [
             "aidala_agent = aidala_agent:run_agents",
         ],
-    },
-    include_package_data=True,
+    }
 )
