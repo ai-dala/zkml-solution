@@ -18,7 +18,9 @@ As of today, [Giza](https://docs.gizatech.xyz/welcome/installation) works with P
 In order to set up your environent correctly, follow the steps below:
 
 `pyenv install 3.11.0`
+
 `pyenv virtualenv 3.11.0 giza`
+
 and at the root of the project `pyenv local giza`
 
 In order to run the CLI, a `.env` file needs to be created in `agents` with the following env vars:
