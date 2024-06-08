@@ -6,3 +6,6 @@ input_data.csv
 *.egg-info
 
 tmp
+/tmp
+build
+model
