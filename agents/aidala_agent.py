@@ -136,10 +136,13 @@ def run_agents(
         click.echo(f"Prediction {prediction}")
         value = float(prediction[0].value)
 
-        if value < 1:
-            with agent.execute() as contracts:
+        with agent.execute() as contracts:
+            balance = contracts.WBTC.balanceOf(RECIPIENT)
+            
+            if value * 10**8 < balance:
+                click.echo("Executing actions")
                 execute_actions(contracts, value)
-            break
+                break
 
     click.echo("Aidala Agent finished")
 
