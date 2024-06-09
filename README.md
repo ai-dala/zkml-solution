@@ -96,4 +96,28 @@ There are 4 main contracts that are used in the tool: WBTC, USDC, uniswap swap r
 
 Furthermore, WBTC contract is used to approve spend by the swap router on behalf of the trader/miner address. And the swap router is used to perform the swap. Also, pool contract is used to find out the current `sqrtPriceLimitX96` which is then used in swap parameters for the swap router.
 
+### Real-World Examples and Use Cases
+
+1) Strategic Asset Management:
+A Bitcoin miner in Norway uses Aidala to optimize investments into ASIC fleet upgrades. Predictive insights help them allocate resources to the most profitable models based on future cost and revenue forecasts at the right time.
+
+2) Financial Planning and Market Positioning:
+A mining farm in Texas uses the tool to forecast BTC requirements to cover future electricity bills. By understanding future price trends, they can make informed decisions on when to sell mined BTC, enhancing profitability.
+
+3) Operational Efficiency:
+A small-scale miner in Sweden integrates Aidala to receive alerts on future electricity price spikes. They adjust their mining intensity and energy consumption during low-cost periods, thereby maximizing efficiency and returns.
+
+4) Risk Management:
+A mining operation in Kazakhstan uses Aidala to mitigate risks associated with market fluctuations. By predicting not only energy costs but also BTC market prices and mining difficulty, they develop strategies to hedge against potential losses.
+
+5) Decentralized Trading:
+A miner in the US uses the tool to automatically convert mined BTC to WBTC and trade on decentralized exchanges. This ensures they can take advantage of favorable market conditions and manage their digital assets more effectively.
+
 ### Future works
+
+##### Automating the Conversion of Mined BTC to WBTC
+One of the primary future goals of Aidala is to automate the process of converting mined BTC to WBTC, further streamlining operations for Bitcoin miners. 
+1) Integrating Decentralized and Centralised Solutions
+2) Enabling Atomic Swaps
+3) Security and Compliance
+By automating the conversion process, Aidala aims to reduce manual intervention, minimize third-party risk, and provide a more efficient and secure solution for Bitcoin miners to manage and optimize their digital assets.
