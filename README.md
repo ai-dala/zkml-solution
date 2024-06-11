@@ -30,9 +30,9 @@ AIDALA_WORKING_PASSPHRASE=<PASSPHRASE USED WHEN CREATING AN ACCOUNT WITH APE>
 SEPOLIA_RPC_URL=<YOUR RPC URL>
 RECIPIENT=<ADDRESS OF AN ACCOUNT CREATED WITH APE>
 ```
+Following this `pip install .` to install the Aidala CLI to talk to giza and run the AI agent.
 
-Following this `cd agents` and then `pip install .` to install the Aidala CLI to talk to giza and run the AI agent.
-
+For the account creation, `ape` framework handled that. In order to use aidala CLI, the account need to be funded with ETH for gas and WBTC for actual swaps. 
 
 ### Training
 
@@ -88,12 +88,8 @@ Prediction
 
 Notice the value above will always be a single float. Hence, we had to create four different models for four dependent variables.
 
-### Inference
-
 ### On chain actions
 
 There are 4 main contracts that are used in the tool: WBTC, USDC, uniswap swap router and uniswap pool. Firstly, it was needed to find the address of the pool. There is a script in the root of the project called `pool_address.py` which gets address of the WBTC/USDC pool to get the current state of it using the `slot0` function.
 
 Furthermore, WBTC contract is used to approve spend by the swap router on behalf of the trader/miner address. And the swap router is used to perform the swap. Also, pool contract is used to find out the current `sqrtPriceLimitX96` which is then used in swap parameters for the swap router.
-
-### Future works
