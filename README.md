@@ -116,3 +116,28 @@ aidala_agent \
 where `electricity_day_price` is a float for how much electricity costs currently in USD per day, `difficulty` is the current bitcoin mining difficulty scaled down by 10^13 as explained above, `hash_rate` is the parameter of a mining ASIC, `power` is how much power a mining ASIC consumes in Kilo Watts, `block_reward` is the amount of BTC rewarded for block creation, `cost_<i>_months` is a trailing sum price of electricity up to this date (ie `cost_4_months` is the sum of electricity costs for the last 4 months) and `btc_price` is the current BTC price in USD scaled down by 10^3. 
 
 Following execution of the given CLI command, two transactions should be created: one for allowance to spend WBTC on behalf of the user and the second one to actually perform a swap.
+
+### Real-World Examples and Use Cases
+
+1) Strategic Asset Management:
+A Bitcoin miner in Norway uses Aidala to optimize investments into ASIC fleet upgrades. Predictive insights help them allocate resources to the most profitable models based on future cost and revenue forecasts at the right time.
+
+2) Financial Planning and Market Positioning:
+A mining farm in Texas uses the tool to forecast BTC requirements to cover future electricity bills. By understanding future price trends, they can make informed decisions on when to sell mined BTC, enhancing profitability.
+
+3) Operational Efficiency:
+A small-scale miner in Sweden integrates Aidala to receive alerts on future electricity price spikes. They adjust their mining intensity and energy consumption during low-cost periods, thereby maximizing efficiency and returns.
+
+4) Risk Management:
+A mining operation in Kazakhstan uses Aidala to mitigate risks associated with market fluctuations. By predicting not only energy costs but also BTC market prices and mining difficulty, they develop strategies to hedge against potential losses.
+
+5) Decentralized Trading:
+A miner in the US uses the tool to automatically convert mined BTC to WBTC and trade on decentralized exchanges. This ensures they can take advantage of favorable market conditions and manage their digital assets more effectively.
+
+### Future works
+
+One of the primary future goals of Aidala is to automate the process of converting mined BTC to WBTC, further streamlining operations for Bitcoin miners. 
+1) Integrating Decentralized and Centralised Solutions
+2) Enabling Atomic Swaps
+3) Security and Compliance
+By automating the conversion process, Aidala aims to reduce manual intervention, minimize third-party risk, and provide a more efficient and secure solution for Bitcoin miners to manage and optimize their digital assets.
