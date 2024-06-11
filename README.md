@@ -93,3 +93,26 @@ Notice the value above will always be a single float. Hence, we had to create fo
 There are 4 main contracts that are used in the tool: WBTC, USDC, uniswap swap router and uniswap pool. Firstly, it was needed to find the address of the pool. There is a script in the root of the project called `pool_address.py` which gets address of the WBTC/USDC pool to get the current state of it using the `slot0` function.
 
 Furthermore, WBTC contract is used to approve spend by the swap router on behalf of the trader/miner address. And the swap router is used to perform the swap. Also, pool contract is used to find out the current `sqrtPriceLimitX96` which is then used in swap parameters for the swap router.
+
+### How to use the CLI tool
+
+After installation of the CLI tool and funding the account with WBTC and ETH on Sepolia network (example account `0xAb616594bc7BA3b3B11711718E4D9eA962Ec6f82` that we used for the demo) the following can be run:
+
+```
+aidala_agent \
+    --electricity_day_price 5.38 \
+    --difficulty 8.6 \
+    --hash_rate 12.2 \
+    --power 2.2 \
+    --block_reward 3.25 \
+    --cost_2_months 301.5 \
+    --cost_3_months 401.5 \
+    --cost_4_months 501.5 \
+    --cost_5_months 504.3 \
+    --cost_6_months 602.2 \
+    --btc_price 74.6
+```
+
+where `electricity_day_price` is a float for how much electricity costs currently in USD per day, `difficulty` is the current bitcoin mining difficulty scaled down by 10^13 as explained above, `hash_rate` is the parameter of a mining ASIC, `power` is how much power a mining ASIC consumes in Kilo Watts, `block_reward` is the amount of BTC rewarded for block creation, `cost_<i>_months` is a trailing sum price of electricity up to this date (ie `cost_4_months` is the sum of electricity costs for the last 4 months) and `btc_price` is the current BTC price in USD scaled down by 10^3. 
+
+Following execution of the given CLI command, two transactions should be created: one for allowance to spend WBTC on behalf of the user and the second one to actually perform a swap.
